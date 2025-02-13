@@ -1,0 +1,139 @@
+#settingsModal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+}
+
+/* Modal content */
+#settingsModalContent {
+  background-color: #222;
+  color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Close button */
+#settingsModalCloseButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Top Tabs */
+#settingsTopTabs {
+  display: flex;
+  justify-content: space-evenly;
+  border-bottom: 2px solid #444;
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  background-color: transparent;
+  color: #bbb;
+  padding: 8px 12px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.tab-button.active {
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+}
+
+.tab-button:hover {
+  color: #fff;
+}
+
+/* Tab Content */
+.tab-content {
+  display: none;
+  margin-top: 10px;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Profile Card */
+.profile-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #444;
+}
+
+.change-profile-btn {
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.change-profile-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+}
+
+textarea {
+  resize: none;
+}
+
+/* Save Button */
+.save-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background-color: #0056b3;
+}

@@ -1,0 +1,130 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.friends-container {
+  display: flex;
+  gap: 10px;
+  padding-top: 80px;
+  height: calc(100vh - 80px);
+  padding: 5px;
+  overflow: hidden;
+}
+
+.friends-sidebar {
+  background-color: #1a1a2e;
+  width: 30%;
+  border-radius: 10px;
+  padding: 20px;
+  color: #e4e6eb;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.sidebar-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #e4e6eb;
+  margin-bottom: 15px;
+}
+
+.search-friend-wrapper {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.search-friend-input {
+  width: 100%;
+  padding: 10px 15px 10px 35px;
+  border: none;
+  border-radius: 20px;
+  background-color: #3a3b3c;
+  color: #b0b3b8;
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #b0b3b8;
+  font-size: 18px;
+}
+
+.friends-list-scroll {
+  overflow-y: auto;
+  flex-grow: 1;
+  padding-right: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: #606770 #242526;
+}
+
+.friends-list-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.friends-list-scroll::-webkit-scrollbar-track {
+  background: #242526;
+}
+
+.friends-list-scroll::-webkit-scrollbar-thumb {
+  background-color: #606770;
+  border-radius: 10px;
+}
+
+.friend-entry {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #2c2c44;
+  margin-bottom: 10px;
+  transition: background-color 0.3s;
+}
+
+.friend-entry:hover {
+  background-color: #343843;
+}
+
+.friend-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+}
+
+.friend-avatar-container {
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+.friend-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover; /* Ensures the image fits within the dimensions */
+  background-color: transparent; /* Ensures the background is transparent */
+  border: none; /* Removes any border */
+}
+.friend-name-container {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+
+.friend-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #e4e6eb;
+  align-items: center;
+}
+
+.like-btn.liked {
+  color: red; /* Change the color to red if the post is liked */
+}

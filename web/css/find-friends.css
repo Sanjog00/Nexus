@@ -1,0 +1,173 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.find-friends-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #1a1a2e;
+}
+
+.find-friends-container {
+  display: flex;
+  gap: 10px;
+  padding-top: 80px;
+  height: calc(100vh - 80px);
+  padding: 5px;
+}
+
+.find-friends-sidebar {
+  background-color: #1a1a2e;
+  width: 30%;
+  border-radius: 10px;
+  padding: 20px;
+  color: #e4e6eb;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.find-sidebar-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #e4e6eb;
+  margin-bottom: 15px;
+}
+
+.find-search-wrapper {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.find-search-input {
+  width: 100%;
+  padding: 10px 15px 10px 35px;
+  border: none;
+  border-radius: 20px;
+  background-color: #3a3b3c;
+  color: #b0b3b8;
+  outline: none;
+}
+
+.find-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #b0b3b8;
+  font-size: 18px;
+}
+
+.find-history-scroll {
+  overflow-y: auto;
+  flex-grow: 1;
+  padding-right: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: #606770 #242526;
+}
+
+.find-history-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.find-history-scroll::-webkit-scrollbar-track {
+  background: #242526;
+}
+
+.find-history-scroll::-webkit-scrollbar-thumb {
+  background-color: #606770;
+  border-radius: 10px;
+}
+
+.find-history-entry {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #1a1a2e;
+  margin-bottom: 10px;
+  transition: background-color 0.3s;
+  position: relative;
+}
+
+.find-history-entry:hover {
+  background-color: #343843;
+}
+
+.find-avatar {
+  font-size: 25px;
+  color: #e4e6eb;
+  margin-right: 10px;
+}
+
+.find-name-container .find-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #e4e6eb;
+  margin-left: 15px;
+}
+
+.find-delete-icon {
+  position: absolute;
+  right: 10px;
+  font-size: 20px;
+  color: #e74c3c;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.find-delete-icon:hover {
+  color: #ff6b6b;
+}
+
+.find-profile-preview {
+  background-color: #1a1a2e;
+  width: 70%;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e4e6eb;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.find-profile-placeholder {
+  text-align: center;
+}
+
+.find-placeholder-icon {
+  width: 80px;
+  margin-bottom: 15px;
+}
+
+.find-placeholder-text {
+  color: #b0b3b8;
+  font-size: 16px;
+}
+
+/* Custom Scrollbar for Profile Preview */
+.find-profile-preview::-webkit-scrollbar {
+  width: 8px;
+}
+
+.find-profile-preview::-webkit-scrollbar-track {
+  background: #242526;
+}
+
+.find-profile-preview::-webkit-scrollbar-thumb {
+  background-color: #606770;
+  border-radius: 10px;
+}
+
+.find-profile-preview::-webkit-scrollbar-thumb:hover {
+  background-color: #4e4f50;
+}

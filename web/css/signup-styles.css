@@ -1,0 +1,238 @@
+/* Boxicons CDN */
+@import url("https://cdn.jsdelivr.net/gh/atisawd/boxicons/css/boxicons.min.css");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fc;
+}
+
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  opacity: 1;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
+}
+
+.signup-content {
+  display: flex;
+  width: 90%;
+  max-width: 1100px;
+  height: 600px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.image-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.animation {
+  width: 100%;
+  max-width: 500px;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+.form-section {
+  flex: 1;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.app-icon {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.app-icon .icon {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 10px;
+}
+
+.app-icon h1 {
+  font-size: 24px;
+  color: #6c757d;
+  margin-bottom: 5px;
+}
+
+.app-icon p {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.signup-form {
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 100px;
+}
+
+.signup-form input,
+.signup-form select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d0d4de;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #6c757d;
+  background-color: #f8f9fc;
+  outline: none;
+}
+
+.signup-form select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.phone-field {
+  display: flex;
+  gap: 5px;
+}
+
+.phone-field select {
+  width: 30%;
+  padding: 12px;
+}
+
+.phone-field input {
+  width: 70%;
+  padding: 12px;
+}
+
+.signup-form button {
+  padding: 12px;
+  background-color: #154c79;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.signup-form button:hover {
+  background-color: #0056b3;
+}
+
+footer {
+  width: 100%;
+  background-color: #154c79;
+  color: #fff;
+  text-align: center;
+  height: 50px;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+footer p {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+
+.social-icons a {
+  color: #fff;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #d4d4d4;
+}
+
+@media (max-width: 768px) {
+  footer {
+    font-size: 12px;
+    padding: 15px 10px;
+  }
+
+  .social-icons {
+    gap: 12px;
+  }
+
+  .signup-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .image-section {
+    display: none;
+  }
+
+  .form-section {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-icon .icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .signup-content {
+    padding: 20px;
+  }
+
+  footer {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .social-icons {
+    gap: 10px;
+  }
+}

@@ -1,0 +1,223 @@
+/* Notification Home Layout */
+.notification-home {
+  display: flex;
+  gap: 10px;
+  padding-top: 80px;
+  height: calc(100vh - 80px);
+  padding: 5px;
+  overflow: hidden;
+}
+
+.notification-wrapper {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  height: 90vh;
+}
+
+/* Notification Panels */
+.notification-panel {
+  flex: 1;
+  background-color: #1a1a2e;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Section Headers */
+.notification-panel h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #e4e6eb;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 10px;
+}
+
+/* Notification Item Styling */
+.notification-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #2c2c44;
+  margin-bottom: 10px;
+  transition: background-color 0.3s;
+}
+
+.notification-item:hover {
+  background-color: #222533;
+}
+
+.notification-item.clickable {
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.notification-item.clickable:hover {
+  background-color: #2d2d4a;
+}
+
+.dark-modal .modal-content {
+  background-color: #1a1a2e;
+  color: #e4e6eb;
+}
+
+.dark-modal .modal-footer {
+  border-top: 1px solid #2d2d4a;
+}
+
+.dark-modal .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.dark-modal .modal-dialog {
+  max-width: 600px;
+  width: 600px;
+}
+
+.dark-modal .modal-content {
+  background-color: #1a1a2e;
+  color: #e4e6eb;
+  height: 600px;
+}
+
+.dark-modal .modal-body {
+  max-height: calc(600px - 120px);
+  overflow-y: auto;
+}
+
+.dark-modal .modal-header .btn-close {
+  background: none !important;
+  opacity: 32 !important;
+  width: auto;
+  height: auto;
+  padding: 10px;
+  margin: 0;
+}
+
+.dark-modal .modal-header .btn-close .bx-x {
+  color: #e4e6eb;
+  font-size: 24px;
+  display: block;
+}
+
+.dark-modal .modal-header {
+  border-bottom: 1px solid #2d2d4a;
+  padding: 15px;
+  position: relative;
+}
+
+.dark-modal .modal-header .btn-close:hover .bx-x {
+  color: #b0b3b8;
+}
+
+/* Profile Icon Styling */
+.notification-profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 15px;
+  font-size: 24px;
+  color: #e4e6eb;
+}
+
+/* Notification Text Styling */
+.notification-text {
+  flex: 1;
+  color: #b0b3b8;
+}
+
+.notification-text p {
+  font-size: 15px;
+  color: #e4e6eb;
+}
+
+.notification-time {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Friend Request Buttons Styling */
+.notification-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.notification-accept,
+.notification-decline {
+  padding: 5px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.notification-accept {
+  background-color: #4caf50;
+  color: #ffffff;
+}
+
+.notification-decline {
+  background-color: #e74c3c;
+  color: #ffffff;
+}
+
+.notification-accept:hover {
+  background-color: #45a049;
+}
+
+.notification-decline:hover {
+  background-color: #c0392b;
+}
+
+/* Custom Scrollbar */
+.notification-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.notification-panel::-webkit-scrollbar-track {
+  background: #11101d;
+  border-radius: 8px;
+}
+
+.notification-panel::-webkit-scrollbar-thumb {
+  background-color: #606770;
+  border-radius: 8px;
+}
+
+.notification-panel::-webkit-scrollbar-thumb:hover {
+  background-color: #4e4f50;
+}
+.notification-post-pic {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.notification-text {
+  flex: 1;
+  margin: 0 15px;
+}
+
+.profilen-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 768px) {
+  .notification-panel.notification-requests {
+    display: none;
+  }
+
+  .notification-panel.notification-general {
+    width: 100%;
+  }
+}
