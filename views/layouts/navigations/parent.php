@@ -126,11 +126,17 @@ AppAsset::register($this);
         <?php echo $content ?>
     </div>
 
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <?php
     $this->registerJsFile('@web/js/notifications.js', ['depends' => [\yii\web\JqueryAsset::class]]);
+    $this->registerJsFile('@web/js/notification-handler.js', ['depends' => [\yii\web\JqueryAsset::class]]);
+
     ?>
+
 
 
     <div id="settingsModal" class="modal">

@@ -696,6 +696,34 @@ class AppController extends Controller
         return ['success' => false];
     }
 
+    public function actionCheckNotifications($lastCheckTime)
+    {
+        if (!Yii::$app->request->isAjax) {
+            return;
+        }
+
+        $newMessages = Messages::find()
+            ->alias('m')
+            ->select(['m.*', 'u.fullname as sender'])
+            ->leftJoin('usersmain u', 'u.user_id = m.sender_id')
+            ->where(['m.receiver_id' => Yii::$app->user->id])
+            ->andWhere(['>', 'm.created_at', $lastCheckTime])
+            ->orderBy(['m.created_at' => SORT_DESC])
+            ->asArray()
+            ->all();
+
+        return $this->asJson([
+            'success' => true,
+            'newMessages' => array_map(function ($message) {
+                return [
+                    'id' => $message['message_id'],
+                    'sender' => $message['sender'],
+                    'time' => $message['created_at']
+                ];
+            }, $newMessages),
+            'currentTime' => date('Y-m-d H:i:s')
+        ]);
+    }
 
     public function actionSettings()
     {
@@ -868,5 +896,36 @@ class AppController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         }
+    }
+
+    public function actionSearchMessages($query)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_HTML;
+
+        try {
+            if (Yii::$app->request->isAjax) {
+                $users = Usersmain::find()
+                    ->where(['like', 'fullname', $query])
+                    ->andWhere(['!=', 'user_id', Yii::$app->user->id])
+                    ->all();
+
+                // Debug output
+                Yii::debug('Search query: ' . $query);
+                Yii::debug('Found users: ' . count($users));
+
+                return $this->renderPartial('_message_search_results', [
+                    'users' => $users
+                ]);
+            }
+        } catch (\Exception $e) {
+            Yii::error('Search error: ' . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function actionDora()
+    {
+
+        return $this->render('dora');
     }
 }

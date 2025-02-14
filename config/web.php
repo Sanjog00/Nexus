@@ -85,7 +85,10 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 'app/profile-view/<username>' => 'app/profile-view/',
-                'app/settings-modal' => 'app/settings-modal'
+                'app/settings-modal' => 'app/settings-modal',
+                'app/search-messages' => 'app/search-messages',
+                'photos' => 'site/photos',
+                'get-photos' => 'site/get-photos',
             ],
         ],
 

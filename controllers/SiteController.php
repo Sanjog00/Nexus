@@ -167,7 +167,7 @@ class SiteController extends Controller
                     Yii::$app->session->set('verification_code', $verificationCode);
                     Yii::$app->session->set('reset_email', $email);
                     // Get absolute path to logo
-                    $logoPath = Yii::getAlias('@webroot/assets/images/logo.png');
+                    $logoPath = Yii::getAlias('@webroot/assets/images/logo.jpeg');
 
                     $message = Yii::$app->mailer->compose('passwordReset', [
                         'verificationCode' => $verificationCode,
@@ -175,7 +175,7 @@ class SiteController extends Controller
                     ]);
 
                     // Embed logo image
-                    $message->embed($logoPath, ['fileName' => 'logo.png']);
+                    $message->embed($logoPath, ['fileName' => 'logo.jpeg']);
 
                     $message->setFrom(['kenjikun3289@gmail.com' => 'Nexus Admin'])
                         ->setTo($email)
@@ -250,5 +250,41 @@ class SiteController extends Controller
         return $this->renderAjax('_verificationSuccess', [
             'model' => $model,
         ]);
+    }
+
+    public function actionGetPhotos()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $webPath = Yii::getAlias('@web/photos');
+
+        // Manually specify the image files
+        $imageFiles = [
+            'image3.jpeg',
+            'image2.jpeg',
+            'image1.jpeg',
+            'image4.jpeg',
+            'image5.jpeg',
+            'image6.jpeg',
+            'image7.jpeg',
+            'image8.jpeg',
+            'image9.jpeg',
+            'image10.jpeg',
+            'image11.jpeg',
+            'image12.jpeg',
+            // Add more image filenames as needed
+        ];
+
+        $photos = [];
+        foreach ($imageFiles as $file) {
+            $photos[] = [
+                'url' => $webPath . '/' . $file,
+                'name' => $file
+            ];
+        }
+
+        return [
+            'error' => false,
+            'photos' => $photos
+        ];
     }
 }

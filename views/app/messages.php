@@ -15,9 +15,11 @@ use app\models\Messages;
 
 
         <div class="messaging-search-bar-wrapper">
+
             <i class="bx bx-search messaging-search-icon"></i>
-            <input type="text" class="messaging-search-input" placeholder="Search messages">
+            <input type="text" class="messaging-search-input" id="message-search" placeholder="Search messages">
         </div>
+
 
 
         <div class="messaging-conversation-list ">
@@ -85,6 +87,7 @@ use app\models\Messages;
     <div class="messaging-chat-window-full-height">
         <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
 
+
             <div class="text-center">
                 <i class='bx bx-message' style="font-size: 50px; color: #fff;"></i>
                 <p style="color: #fff; font-size: 20px;">Select a friend to view conversation.</p>
@@ -117,7 +120,38 @@ $this->registerJs("
             }
         });
     });
+
+    // Update the search event handler in messages.php
+    let searchTimeout;
+    $('#message-search').on('input', function() {
+        clearTimeout(searchTimeout);
+        const query = $(this).val();
+        
+        searchTimeout = setTimeout(function() {
+            if (query.length >= 2) {
+                $.ajax({
+                    url: '" . Yii::$app->urlManager->createUrl(['app/search-messages']) . "',
+                    type: 'GET',
+                    data: { query: query },
+                    beforeSend: function() {
+                        console.log('Searching for:', query);
+                    },
+                    success: function(response) {
+                        $('.messaging-conversation-list').html(response);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('Search error:', textStatus, errorThrown);
+                        console.error('Response:', jqXHR.responseText);
+                        $('.messaging-conversation-list').html('<div class=\"error\">Search failed. Please try again.</div>');
+                    }
+                });
+            } else if (query.length === 0) {
+                location.reload();
+            }
+        }, 300);
+    });
 ");
+
 
 
 ?>

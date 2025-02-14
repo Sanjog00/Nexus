@@ -33,6 +33,7 @@ AppAsset::register($this);
     <?php Pjax::end(); ?>
 </div>
 
+
 <?php $form = ActiveForm::begin([
     'action' => ['app/send-message'],
     'method' => 'post',
@@ -40,9 +41,15 @@ AppAsset::register($this);
         'id' => 'message-form',
     ],
 ]); ?>
-<div style="display: flex; align-items: center; width: 100%;">
+<div style="display: flex; align-items: center; width: 100%; position: relative;">
+
+    <i class="bx bx-smile messaging-emoji-icon" id="emoji-icon"></i>
+    <emoji-picker style="display: none; position: absolute; bottom: 100%; left: 0;" id="emoji-picker"></emoji-picker>
+
+    <i class="bx bx-image messaging-emoji-icon"></i>
 
     <?= Html::hiddenInput('userId', $selectedUser->user_id) ?>
+
     <?= $form->field($newMessage, 'content', [
         'options' => ['class' => 'form-field-container', 'style' => 'margin: 0; flex: 1;']
     ])->textInput([
