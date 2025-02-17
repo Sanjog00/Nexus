@@ -5,6 +5,9 @@ use app\models\Usersmain;
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
+defined('YII_DEBUG') or define('YII_DEBUG', false);
+defined('YII_ENV') or define('YII_ENV', 'prod');
+
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
