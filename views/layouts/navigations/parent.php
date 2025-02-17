@@ -24,7 +24,8 @@ AppAsset::register($this);
     <link rel="stylesheet" href="<?= Url::to('@web/css/style-friends.css') ?>">
     <link rel="stylesheet" href="<?= Url::to('@web/css/style-notifications.css') ?>">
     <link rel="stylesheet" href="<?= Url::to('@web/css/settings.css') ?>">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/css/emoji-picker.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?= Html::csrfMetaTags() ?>
@@ -126,7 +127,6 @@ AppAsset::register($this);
         <?php echo $content ?>
     </div>
 
-    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>

@@ -75,31 +75,28 @@ class ChatHandler {
     const messageInput = document.getElementById("message-input");
 
     if (!emojiIcon || !emojiPicker || !messageInput) {
-      console.warn("Emoji picker elements not found");
+      console.error("Emoji picker elements not found");
       return;
     }
 
     // Toggle emoji picker
     emojiIcon.addEventListener("click", () => {
-      const isHidden = emojiPicker.style.display === "none";
-      emojiPicker.style.display = isHidden ? "block" : "none";
+      emojiPicker.style.display =
+        emojiPicker.style.display === "none" ? "block" : "none";
     });
 
     // Handle emoji selection
     emojiPicker.addEventListener("emoji-click", (event) => {
       const emoji = event.detail.unicode;
-      const cursorPosition = messageInput.selectionStart;
-      const textBeforeCursor = messageInput.value.substring(0, cursorPosition);
-      const textAfterCursor = messageInput.value.substring(cursorPosition);
-
-      messageInput.value = textBeforeCursor + emoji + textAfterCursor;
+      const cursorPos = messageInput.selectionStart;
+      const text = messageInput.value;
+      messageInput.value =
+        text.slice(0, cursorPos) + emoji + text.slice(cursorPos);
       messageInput.focus();
-
-      // Hide picker after selection
       emojiPicker.style.display = "none";
     });
 
-    // Close emoji picker when clicking outside
+    // Close picker when clicking outside
     document.addEventListener("click", (event) => {
       if (!emojiPicker.contains(event.target) && event.target !== emojiIcon) {
         emojiPicker.style.display = "none";

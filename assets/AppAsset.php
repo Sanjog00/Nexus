@@ -22,7 +22,7 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css',
-        //'https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css',
+        'https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css',
 
     ];
     public $js = [

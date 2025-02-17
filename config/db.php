@@ -3,7 +3,7 @@
 return [
     'class' => 'yii\db\Connection',
     'dsn' => 'mysql:host=localhost;dbname=nexus',
-    'username' => 'nexusproject',
+    'username' => 'nexus',
     'password' => 'kenji3289',
     'charset' => 'utf8mb4',
     'on afterOpen' => function ($event) {
