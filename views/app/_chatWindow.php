@@ -43,8 +43,12 @@ AppAsset::register($this);
 ]); ?>
 <div style="display: flex; align-items: center; width: 100%; position: relative;">
 
-    <i class="bx bx-smile messaging-emoji-icon" id="emoji-icon"></i>
-    <emoji-picker style="display: none; position: absolute; bottom: 100%; left: 0;" id="emoji-picker"></emoji-picker>
+    <i class="bx bx-smile messaging-emoji-icon" id="emoji-icon">
+
+    </i>
+    <emoji-picker style="display: none; position: absolute; bottom: 100%; left: 0;" id="emoji-picker">
+
+    </emoji-picker>
 
     <i class="bx bx-image messaging-emoji-icon"></i>
 
