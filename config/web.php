@@ -92,6 +92,7 @@ $config = [
                 'app/search-messages' => 'app/search-messages',
                 'photos' => 'site/photos',
                 'get-photos' => 'site/get-photos',
+                'app/get-likes' => 'app/get-likes',
             ],
         ],
 

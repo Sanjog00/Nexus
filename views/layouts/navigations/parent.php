@@ -26,6 +26,8 @@ AppAsset::register($this);
     <link rel="stylesheet" href="<?= Url::to('@web/css/settings.css') ?>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/css/emoji-picker.css">
     <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+
+
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?= Html::csrfMetaTags() ?>
@@ -134,7 +136,9 @@ AppAsset::register($this);
     <?php
     $this->registerJsFile('@web/js/notifications.js', ['depends' => [\yii\web\JqueryAsset::class]]);
     $this->registerJsFile('@web/js/notification-handler.js', ['depends' => [\yii\web\JqueryAsset::class]]);
-
+    $this->registerJsFile('https://unpkg.com/@popperjs/core@2', ['position' => \yii\web\View::POS_HEAD]);
+    $this->registerJsFile('https://unpkg.com/tippy.js@6', ['position' => \yii\web\View::POS_HEAD]);
+    $this->registerCssFile('https://unpkg.com/tippy.js@6/animations/scale.css');
     ?>
 
 

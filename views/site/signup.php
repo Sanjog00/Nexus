@@ -18,7 +18,7 @@ $this->title = 'Nexus Signup';
         </div>
         <?php $form = ActiveForm::begin(['options' => ['class' => 'signup-form']]); ?>
 
-        <?= $form->field($model, 'username')->textInput(['placeholder' => 'Username', 'required' => true])->label(false) ?>
+        <?= $form->field($model, 'username')->textInput(['placeholder' => 'Username', 'required' => true, 'pattern' => '^[a-zA-Z0-9_]+$'])->label(false) ?>
 
         <?= $form->field($model, 'email')->input('email', ['placeholder' => 'Email Address', 'required' => true])->label(false) ?>
 

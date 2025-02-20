@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models;
+
 use yii\base\Model;
 use app\components\ProfilePictureGenerator;
 
@@ -13,7 +15,7 @@ class SignupForm extends Model
     public $gender;
     public $role_id;
     public $fullname;
-   
+
     public function rules()
     {
         return [
@@ -34,7 +36,8 @@ class SignupForm extends Model
             $user = new CustomUser();
             $user->username = $this->username;
             $user->email = $this->email;
-            $user->fullname = $this->fullname;
+            $user->fullname = strtoupper($this->fullname);
+
             $user->gender = $this->gender;
             $user->status = 1; // Active status
             $user->role_id = 1; // Default role
@@ -47,9 +50,9 @@ class SignupForm extends Model
             $usermain = new Usersmain();
             $usermain->username = $this->username;
             $usermain->email = $this->email;
-            $usermain->fullname = $this->fullname;
+            $usermain->fullname = strtoupper($this->fullname);
             $usermain->password_hash = \Yii::$app->security->generatePasswordHash($this->password);
-            $usermain->gender= $this->gender;
+            $usermain->gender = $this->gender;
             $usermain->profile_image_path = $profilePictureUrl;
             $usermain->save();
 
@@ -59,5 +62,3 @@ class SignupForm extends Model
         return null;
     }
 }
-
-?>

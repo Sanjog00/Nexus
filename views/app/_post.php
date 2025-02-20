@@ -36,32 +36,9 @@ AppAsset::register($this);
         </div> <?php endif; ?>
 
     <div class="post-actions">
-        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-            <?php Pjax::begin(['id' => 'pjax-like-container-' . $post->post_id, 'enablePushState' => false]); ?>
-            <?php if ($post->isLikedByCurrentUser()): ?>
-                <?= Html::beginForm(['app/unlike'], 'post', [
-                    'data-pjax' => true,
-                    'class' => 'like-form'
-                ]) ?>
-                <?= Html::hiddenInput('postId', $post->post_id) ?>
-                <button type="submit" class="like-btn">
-                    <i class='bx bxs-heart' style="color: red;"></i>
-                </button>
-                <?= Html::endForm() ?>
-            <?php else: ?>
-                <?= Html::beginForm(['app/like'], 'post', [
-                    'data-pjax' => true,
-                    'class' => 'like-form'
-                ]) ?>
-                <?= Html::hiddenInput('postId', $post->post_id) ?>
-                <button type="submit" class="like-btn">
-                    <i class='bx bx-heart' style="color: white;"></i>
-                </button>
-                <?= Html::endForm() ?>
-            <?php endif; ?>
-            <span class="like-count" data-post-id="<?= $post->post_id ?>"><?= Html::encode($post->getLikes()->count()) ?> likes</span>
-            <?php Pjax::end(); ?>
-        </div>
+        <?php Pjax::begin(['id' => 'pjax-like-container-' . $post->post_id, 'enablePushState' => false]); ?>
+        <?= $this->render('_likeButton', ['post' => $post]) ?>
+        <?php Pjax::end(); ?>
     </div>
 
     <div class="comment-section">

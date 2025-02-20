@@ -982,15 +982,49 @@ class AppController extends Controller
         ]);
     }
 
-    public function actionGetAllUsers()
+    public function actionGetLikes($postId)
     {
-        $users = Usersmain::find()
-            ->where(['!=', 'user_id', Yii::$app->user->id])
-            ->limit(20)
-            ->all();
+        if (Yii::$app->user->isGuest) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return [
+                'success' => false,
+                'error' => 'Authentication required'
+            ];
+        }
 
-        return $this->renderPartial('_usersList', [
-            'users' => $users
-        ]);
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        try {
+            $post = Posts::findOne($postId);
+            if (!$post) {
+                return [
+                    'success' => false,
+                    'error' => 'Post not found'
+                ];
+            }
+
+            $likes = Likes::find()
+                ->where(['post_id' => $postId])
+                ->with('user')
+                ->all();
+
+            $likeData = array_map(function ($like) {
+                return [
+                    'fullname' => $like->user->fullname,
+                    'username' => $like->user->username,
+                ];
+            }, $likes);
+
+            return [
+                'success' => true,
+                'likes' => $likeData
+            ];
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage(), 'error');
+            return [
+                'success' => false,
+                'error' => 'Failed to load likes: ' . $e->getMessage()
+            ];
+        }
     }
 }

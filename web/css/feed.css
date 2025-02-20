@@ -168,7 +168,6 @@
 
 .like-btn:hover i {
   color: #ff6b7a;
-  transform: scale(1.2);
 }
 
 .comment-btn i {
@@ -481,4 +480,178 @@
   .sidebar-column {
     display: none;
   }
+}
+
+.tippy-box[data-theme~="nexus"] {
+  background-color: #262626;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+}
+
+.tippy-box[data-theme~="nexus"][data-placement^="top"] > .tippy-arrow::before {
+  border-top-color: #262626;
+}
+
+.likes-popup-content {
+  width: 300px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.likes-header {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+  color: #fff;
+}
+
+.likes-list {
+  padding: 8px;
+}
+
+.like-user-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.like-user-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.like-user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+}
+
+.like-user-info {
+  flex: 1;
+}
+
+.like-user-name {
+  color: #fff;
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.like-user-username {
+  color: #999;
+  font-size: 13px;
+}
+
+.likes-loading {
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+}
+
+.likes-loading i {
+  margin-right: 8px;
+}
+
+.likes-empty,
+.likes-error {
+  padding: 20px;
+  text-align: center;
+  color: #999;
+}
+
+.likes-error {
+  color: #ff4444;
+}
+
+/* Custom scrollbar */
+.likes-popup-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.likes-popup-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.likes-popup-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.interaction-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.button-group {
+  display: flex;
+  align-items: flex-start;
+}
+
+.like-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.action-btn {
+  background: transparent;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  position: relative;
+}
+
+.action-btn i {
+  font-size: 24px;
+  color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.like-btn i.bxs-heart {
+  color: #ff3040;
+}
+
+.send-btn i {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.like-form {
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+}
+
+.like-count {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
 }
