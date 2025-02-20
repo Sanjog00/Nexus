@@ -21,7 +21,7 @@
 
 
            <?= Html::activeTextInput($searchModel, 'fullname', [
-                'class' => 'find-search-input',
+                'class' => 'messaging-search-input',
                 'placeholder' => 'Search friends',
                 'oninput' => '$.pjax.submit(event, "#friends-pjax")'
             ]) ?>
