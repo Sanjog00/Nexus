@@ -928,4 +928,69 @@ class AppController extends Controller
 
         return $this->render('dora');
     }
+
+    public function actionUploadImage()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        if (Yii::$app->request->isAjax) {
+            $uploadedFile = UploadedFile::getInstanceByName('imageFile');
+
+            if ($uploadedFile) {
+                $fileName = uniqid() . '.' . $uploadedFile->extension;
+                $filePath = Yii::getAlias('@webroot/message/photos/') . $fileName;
+
+                if ($uploadedFile->saveAs($filePath)) {
+                    $message = new Messages();
+                    $message->sender_id = Yii::$app->user->id;
+                    $message->receiver_id = Yii::$app->request->post('userId');
+                    $message->content = $fileName;
+                    $message->message_type = 'image';
+                    $message->created_at = date('Y-m-d H:i:s');
+
+                    if ($message->save()) {
+                        return [
+                            'success' => true,
+                            'html' => $this->renderPartial('_message', [
+                                'messages' => [$message],
+                                'selectedUser' => Usersmain::findOne($message->receiver_id)
+                            ])
+                        ];
+                    }
+                }
+            }
+        }
+
+        return ['success' => false];
+    }
+
+    public function actionSearchUsers($query)
+    {
+        if (empty($query)) {
+            return $this->renderPartial('_usersList', ['users' => []]);
+        }
+
+        $users = Usersmain::find()
+            ->where(['like', 'fullname', $query])
+            ->orWhere(['like', 'username', $query])
+            ->andWhere(['!=', 'user_id', Yii::$app->user->id])
+            ->limit(20)
+            ->all();
+
+        return $this->renderPartial('_usersList', [
+            'users' => $users
+        ]);
+    }
+
+    public function actionGetAllUsers()
+    {
+        $users = Usersmain::find()
+            ->where(['!=', 'user_id', Yii::$app->user->id])
+            ->limit(20)
+            ->all();
+
+        return $this->renderPartial('_usersList', [
+            'users' => $users
+        ]);
+    }
 }

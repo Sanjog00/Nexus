@@ -18,6 +18,10 @@ AppAsset::register($this);
             ) ?>
         </strong>
     </div>
+    <div class="messaging-chat-header-actions">
+        <i class="bx bx-phone messaging-call-icon" id="start-call-btn" onclick="startCall(<?= $selectedUser->user_id ?>)" title="Start call"></i>
+        <i class="bx bx-video messaging-call-icon" title="Start video call"></i>
+    </div>
 </div>
 
 <div class="messaging-chat-messages-container messaging-custom-scrollbar">
@@ -32,6 +36,7 @@ AppAsset::register($this);
     <?= $this->render('_message', ['messages' => $messages, 'selectedUser' => $selectedUser]) ?>
     <?php Pjax::end(); ?>
 </div>
+
 
 
 <?php $form = ActiveForm::begin([

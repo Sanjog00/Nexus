@@ -21,7 +21,6 @@ use app\models\Messages;
         </div>
 
 
-
         <div class="messaging-conversation-list ">
             <?php foreach ($users as $user): ?>
                 <div class="messaging-conversation-entry">
@@ -41,7 +40,7 @@ use app\models\Messages;
                                     ->orderBy(['created_at' => SORT_DESC])
                                     ->one();
 
-                                if ($lastMessage):
+                                if ($lastMessage and):
                                     $key = Yii::$app->params['messageEncryptionKey'];
                                     $combined = base64_decode($lastMessage->content);
                                     $iv = substr($combined, 0, 16);

@@ -17,41 +17,16 @@ $this->title = 'Search';
     <div class="friends-sidebar">
         <h2 class="find-sidebar-title">Find Friends</h2>
 
-        <?php Pjax::begin(['id' => 'search-pjax', 'enablePushState' => false]); ?>
         <div class="find-search-wrapper">
-            <?php $form = ActiveForm::begin([
-                'id' => 'search-form',
-                'method' => 'post',
-                'options' => ['data-pjax' => true],
-            ]); ?>
             <i class="bx bx-search find-search-icon"></i>
-            <?= Html::activeTextInput($searchModel, 'fullname', [
-                'class' => 'find-search-input',
-                'placeholder' => 'Search friends'
-            ]) ?>
-            <?php ActiveForm::end(); ?>
+            <input type="text" class="messaging-search-input" id="friends-search" placeholder="Search friends">
         </div>
 
-        <div class="find-history-scroll">
-            <?php if (!empty($users)): ?>
-                <?php foreach ($users as $user): ?>
-                    <div class="find-history-entry">
-                        <a href="#" class="friend-link" data-id="<?= $user->user_id ?>">
-                            <?php if ($user->profile_image_path): ?>
-                                <img src="<?= Html::encode($user->profile_image_path) ?>" alt="Profile" class="friend-avatar">
-                            <?php else: ?>
-
-                            <?php endif; ?>
-                            <div class="find-name-container">
-                                <p class="find-name"><?= Html::encode($user->fullname) ?></p>
-                            </div>
-
-                        </a>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
+        <div class="find-history-scroll" id="search-results">
+            <div class="text-center p-3">
+                <p class="text-muted">Type to search for friends</p>
+            </div>
         </div>
-        <?php Pjax::end(); ?>
     </div>
 
     <!-- Profile Preview Section -->
@@ -70,19 +45,48 @@ $this->title = 'Search';
 
 <?php
 $this->registerJs("
+    let searchTimeout;
+    $('#friends-search').on('input', function() {
+        clearTimeout(searchTimeout);
+        const query = $(this).val().trim();
+        
+        if (query.length === 0) {
+            $('#search-results').html('<div class=\"text-center p-3\"><p class=\"text-muted\">Type to search for friends</p></div>');
+            return;
+        }
+        
+        searchTimeout = setTimeout(function() {
+            if (query.length >= 2) {
+                $.ajax({
+                    url: '" . Yii::$app->urlManager->createUrl(['app/search-users']) . "',
+                    type: 'GET',
+                    data: { query: query },
+                    beforeSend: function() {
+                        $('#search-results').html('<div class=\"text-center p-3\"><i class=\"bx bx-loader-alt bx-spin\" style=\"font-size: 24px; color: #fff;\"></i></div>');
+                    },
+                    success: function(response) {
+                        $('#search-results').html(response);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('Search error:', textStatus, errorThrown);
+                        $('#search-results').html('<div class=\"text-center p-3\"><p class=\"text-danger\">Search failed. Please try again.</p></div>');
+                    }
+                });
+            }
+        }, 300);
+    });
+
     $(document).on('click', '.friend-link', function(e) {
         e.preventDefault();
         var userId = $(this).data('id');
         $.ajax({
             url: '" . Yii::$app->urlManager->createUrl(['app/profile']) . "?id=' + userId,
             type: 'GET',
-            push: false,
             success: function(data) {
                 $('.profile-preview').html(data);
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error('Error loading profile:', textStatus, errorThrown);
-                console.error('Response:', jqXHR.responseText);
                 alert('Error loading profile.');
             }
         });

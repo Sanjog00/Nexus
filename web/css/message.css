@@ -368,3 +368,74 @@ emoji-picker {
     display: none;
   }
 }
+
+.image-message {
+  max-width: 300px;
+  margin: 5px 0;
+}
+
+.sent-photo-message,
+.received-photo-message {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.sent-photo-message:hover,
+.received-photo-message:hover {
+  transform: scale(1.05);
+}
+
+.messaging-message-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 8px;
+  object-fit: cover;
+}
+
+.received .image-message {
+  margin-left: 40px;
+}
+
+.messaging-chat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Increased gap between icons */
+  padding-right: 8px;
+}
+
+.messaging-call-icon {
+  font-size: 26px; /* Increased from 22px */
+  color: #ebe9e9;
+  cursor: pointer;
+  padding: 5px; /* Increased padding */
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px; /* Added fixed width */
+  height: 44px; /* Added fixed height */
+}
+
+.messaging-call-icon:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #7a7878;
+  transform: scale(1.05); /* Added subtle scale effect on hover */
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  .messaging-call-icon {
+    color: #fafafa;
+  }
+
+  .messaging-call-icon:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+  }
+}
