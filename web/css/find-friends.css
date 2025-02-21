@@ -1,23 +1,6 @@
-/* General Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.find-friends-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #1a1a2e;
-}
-
 .find-friends-container {
   display: flex;
   gap: 10px;
-  padding-top: 80px;
-  height: calc(100vh - 80px);
   padding: 5px;
 }
 

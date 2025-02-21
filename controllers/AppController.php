@@ -563,19 +563,20 @@ class AppController extends Controller
             ->orderBy(['created_at' => SORT_ASC])
             ->all();
 
-
         $key = Yii::$app->params['messageEncryptionKey'];
         foreach ($messages as $message) {
-            $combined = base64_decode($message->content);
-            $iv = substr($combined, 0, 16);
-            $encrypted = substr($combined, 16);
-            $message->content = openssl_decrypt(
-                $encrypted,
-                'AES-256-CBC',
-                $key,
-                0,
-                $iv
-            );
+            if ($message->message_type === 'text') {
+                $combined = base64_decode($message->content);
+                $iv = substr($combined, 0, 16);
+                $encrypted = substr($combined, 16);
+                $message->content = openssl_decrypt(
+                    $encrypted,
+                    'AES-256-CBC',
+                    $key,
+                    0,
+                    $iv
+                );
+            }
         }
         $newMessage = new Messages();
 
@@ -591,53 +592,68 @@ class AppController extends Controller
         if (Yii::$app->request->isAjax) {
             $newMessage = new Messages();
             if ($newMessage->load(Yii::$app->request->post())) {
-                // Encrypt message content
-                $key = Yii::$app->params['messageEncryptionKey'];
-                $iv = openssl_random_pseudo_bytes(16);
-                $encrypted = openssl_encrypt(
-                    $newMessage->content,
-                    'AES-256-CBC',
-                    $key,
-                    0,
-                    $iv
-                );
+                try {
+                    // Encrypt message content
+                    $key = Yii::$app->params['messageEncryptionKey'];
+                    $iv = openssl_random_pseudo_bytes(16);
+                    $encrypted = openssl_encrypt(
+                        $newMessage->content,
+                        'AES-256-CBC',
+                        $key,
+                        0,
+                        $iv
+                    );
 
-                $newMessage->content = base64_encode($iv . $encrypted);
-                $newMessage->sender_id = Yii::$app->user->id;
-                $newMessage->receiver_id = Yii::$app->request->post('userId');
-                $newMessage->created_at = date('Y-m-d H:i:s');
+                    $newMessage->content = base64_encode($iv . $encrypted);
+                    $newMessage->sender_id = Yii::$app->user->id;
+                    $newMessage->receiver_id = Yii::$app->request->post('userId');
+                    $newMessage->created_at = date('Y-m-d H:i:s');
 
-                if ($newMessage->save()) {
-                    $messages = Messages::find()
-                        ->where([
-                            'or',
-                            ['sender_id' => Yii::$app->user->id, 'receiver_id' => $newMessage->receiver_id],
-                            ['sender_id' => $newMessage->receiver_id, 'receiver_id' => Yii::$app->user->id]
-                        ])
-                        ->orderBy(['created_at' => SORT_ASC])
-                        ->all();
+                    if ($newMessage->save()) {
+                        $messages = Messages::find()
+                            ->where([
+                                'or',
+                                ['sender_id' => Yii::$app->user->id, 'receiver_id' => $newMessage->receiver_id],
+                                ['sender_id' => $newMessage->receiver_id, 'receiver_id' => Yii::$app->user->id]
+                            ])
+                            ->orderBy(['created_at' => SORT_ASC])
+                            ->all();
 
+                        foreach ($messages as $message) {
+                            try {
+                                $combined = base64_decode($message->content, true);
+                                if ($combined === false || strlen($combined) < 16) {
+                                    $message->content = '[Encrypted Message]';
+                                    continue;
+                                }
+                                $iv = substr($combined, 0, 16);
+                                $encrypted = substr($combined, 16);
+                                $decrypted = openssl_decrypt(
+                                    $encrypted,
+                                    'AES-256-CBC',
+                                    $key,
+                                    0,
+                                    $iv
+                                );
+                                $message->content = $decrypted !== false ? $decrypted : '[Encrypted Message]';
+                            } catch (\Exception $e) {
+                                Yii::error('Decryption error: ' . $e->getMessage());
+                                $message->content = '[Encrypted Message]';
+                            }
+                        }
 
-                    foreach ($messages as $message) {
-                        $combined = base64_decode($message->content);
-                        $iv = substr($combined, 0, 16);
-                        $encrypted = substr($combined, 16);
-                        $message->content = openssl_decrypt(
-                            $encrypted,
-                            'AES-256-CBC',
-                            $key,
-                            0,
-                            $iv
-                        );
+                        return $this->renderAjax('_message', [
+                            'messages' => $messages,
+                            'selectedUser' => Usersmain::findOne($newMessage->receiver_id)
+                        ]);
                     }
-
-                    return $this->renderAjax('_message', [
-                        'messages' => $messages,
-                        'selectedUser' => Usersmain::findOne($newMessage->receiver_id)
-                    ]);
+                } catch (\Exception $e) {
+                    Yii::error('Message encryption error: ' . $e->getMessage());
+                    return json_encode(['error' => 'Failed to send message']);
                 }
             }
         }
+        return json_encode(['error' => 'Invalid request']);
     }
 
     public function actionCheckNewMessages($userId, $lastMessageTime, $processedIds = [])
@@ -1024,6 +1040,77 @@ class AppController extends Controller
             return [
                 'success' => false,
                 'error' => 'Failed to load likes: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    public function getMutualFollowers()
+    {
+        return Usersmain::find()
+            ->innerJoin('follows as f1', 'f1.followed_id = id')
+            ->innerJoin('follows as f2', 'f2.follower_id = id')
+            ->where(['f1.follower_id' => Yii::$app->user->id])
+            ->andWhere(['f2.followed_id' => Yii::$app->user->id])
+            ->all();
+    }
+
+    public function actionSharePost()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        // Verify if it's an AJAX request
+        if (!Yii::$app->request->isAjax) {
+            return [
+                'success' => false,
+                'message' => 'Invalid request method'
+            ];
+        }
+
+        // Get the post data
+        $postId = Yii::$app->request->post('postId');
+        $friendIds = Yii::$app->request->post('friendIds');
+
+        // Validate input
+        if (empty($postId) || empty($friendIds)) {
+            return [
+                'success' => false,
+                'message' => 'Missing required parameters'
+            ];
+        }
+
+        try {
+            $transaction = Yii::$app->db->beginTransaction();
+
+            // Share post with each selected friend
+            foreach ($friendIds as $friendId) {
+                $message = new Messages([
+                    'sender_id' => Yii::$app->user->id,
+                    'receiver_id' => $friendId,
+                    'message_type' => 'post',
+                    'content' => $postId,
+                    'created_at' => date('Y-m-d H:i:s'),
+
+                ]);
+
+                if (!$message->save()) {
+                    throw new \Exception('Failed to save message');
+                }
+            }
+
+            $transaction->commit();
+
+            return [
+                'success' => true,
+                'message' => 'Post shared successfully!'
+            ];
+        } catch (\Exception $e) {
+            if (isset($transaction)) {
+                $transaction->rollBack();
+            }
+            Yii::error('Share post error: ' . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => 'Failed to share post: ' . $e->getMessage()
             ];
         }
     }

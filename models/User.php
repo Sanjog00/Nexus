@@ -2,7 +2,10 @@
 
 namespace app\models;
 
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+use Yii;
+use yii\db\Query;
+
+class User extends \amnah\yii2\user\models\User
 {
     public $id;
     public $username;
@@ -100,5 +103,20 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     public function validatePassword($password)
     {
         return $this->password === $password;
+    }
+
+    public function getMutualFollowers()
+    {
+        return (new Query())
+            ->select(['u.*'])
+            ->from('user u')
+            ->innerJoin('follows f1', 'f1.followed_id = u.id')
+            ->innerJoin('follows f2', 'f2.follower_id = u.id')
+            ->where([
+                'f1.follower_id' => Yii::$app->user->id,
+                'f2.followed_id' => Yii::$app->user->id,
+            ])
+            ->andWhere(['!=', 'u.id', Yii::$app->user->id])
+            ->all();
     }
 }

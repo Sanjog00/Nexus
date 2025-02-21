@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use app\models\Messages;
+
 ?>
 
 
@@ -40,31 +41,36 @@ use app\models\Messages;
                                     ->orderBy(['created_at' => SORT_DESC])
                                     ->one();
 
-                                if ($lastMessage and):
-                                    $key = Yii::$app->params['messageEncryptionKey'];
-                                    $combined = base64_decode($lastMessage->content);
-                                    $iv = substr($combined, 0, 16);
-                                    $encrypted = substr($combined, 16);
-                                    $decryptedContent = openssl_decrypt(
-                                        $encrypted,
-                                        'AES-256-CBC',
-                                        $key,
-                                        0,
-                                        $iv
-                                    );
+                                if ($lastMessage):
+                                    if ($lastMessage->message_type === 'post') {
+                                        $displayContent = 'shared a post';
+                                    } else {
+                                        $key = Yii::$app->params['messageEncryptionKey'];
+                                        $combined = base64_decode($lastMessage->content);
+                                        $iv = substr($combined, 0, 16);
+                                        $encrypted = substr($combined, 16);
+                                        $decryptedContent = openssl_decrypt(
+                                            $encrypted,
+                                            'AES-256-CBC',
+                                            $key,
+                                            0,
+                                            $iv
+                                        );
+                                        $displayContent = strlen($decryptedContent) > 20 ? substr($decryptedContent, 0, 20) . '...' : $decryptedContent;
+                                    }
                                 ?>
                                     <?php if ($lastMessage->sender_id == Yii::$app->user->id): ?>
-                                        You: <?= Html::encode(strlen($decryptedContent) > 20 ? substr($decryptedContent, 0, 20) . '...' : $decryptedContent) ?> · <?= str_replace(
-                                                                                                                                                                        [' hours', ' minutes', ' seconds', ' ago'],
-                                                                                                                                                                        ['h', 'm', 's', ''],
-                                                                                                                                                                        Yii::$app->formatter->asRelativeTime($lastMessage->created_at)
-                                                                                                                                                                    ) ?>
+                                        You: <?= Html::encode($displayContent) ?> · <?= str_replace(
+                                                                                        [' hours', ' minutes', ' seconds', ' ago'],
+                                                                                        ['h', 'm', 's', ''],
+                                                                                        Yii::$app->formatter->asRelativeTime($lastMessage->created_at)
+                                                                                    ) ?>
                                     <?php else: ?>
-                                        <?= Html::encode(strlen($decryptedContent) > 20 ? substr($decryptedContent, 0, 20) . '...' : $decryptedContent) ?> · <?= str_replace(
-                                                                                                                                                                    [' hours', ' minutes', ' seconds', ' ago'],
-                                                                                                                                                                    ['h', 'm', 's', ''],
-                                                                                                                                                                    Yii::$app->formatter->asRelativeTime($lastMessage->created_at)
-                                                                                                                                                                ) ?>
+                                        <?= Html::encode($displayContent) ?> · <?= str_replace(
+                                                                                    [' hours', ' minutes', ' seconds', ' ago'],
+                                                                                    ['h', 'm', 's', ''],
+                                                                                    Yii::$app->formatter->asRelativeTime($lastMessage->created_at)
+                                                                                ) ?>
                                     <?php endif; ?>
                                 <?php else: ?>
                                     No messages yet
@@ -96,8 +102,9 @@ use app\models\Messages;
 
     </div>
 </div>
-</div>
-</div>
+
+
+
 
 
 <?php

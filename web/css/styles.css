@@ -320,15 +320,11 @@ body {
 }
 
 .home-section {
-  position: relative;
   background: #e4e9f7;
-  min-height: 100vh;
+
   padding-left: 78px;
   top: 0px;
   transition: padding-left 0.5s ease;
-
-  overflow-y: auto;
-  height: auto;
 }
 .sidebar.open ~ .home-section {
   padding-left: 250px;
